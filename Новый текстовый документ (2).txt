@@ -1,0 +1,29 @@
+procedure TForm1.Button1Click(Sender: TObject);
+var
+dx,dy,d,x,y,e:real;
+function f1(x,y:real): real;
+begin
+f1:=2*y-cos(x+1);
+end;
+function f2(x,y: real): real;
+begin
+f2:=x+sin(y)+0.4;
+end;
+
+begin
+x:=StrToFloat(Edit1.Text);
+y:=StrToFloat(Edit2.Text);
+e:=StrToFloat(Edit3.Text);
+
+repeat
+d:=cos(y)*sin(x+1)-2;
+dx:=(2*y-cos(x+1))*cos(y)-2*(x+sin(y)+0.4);
+dy:=(x+sin(y)+0.4)*sin(x+1)-2*y+cos(x+1);
+x:=x-dx/d;
+y:=y-dy/d;
+until(abs(abs(f1(x,y))-abs(f2(x,y)))<e);
+Edit4.Text:=FloatToStr(RoundTo(x,-8));
+Edit5.Text:=FloatToStr(RoundTo(y,-8));
+Edit6.Text:=FloatToStrF(RoundTo(f1(x,y),-9),ffFixed,3,8);
+Edit7.Text:=FloatToStrF(RoundTo(f2(x,y),-9),ffFixed,3,8);
+end;
